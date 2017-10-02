@@ -23,9 +23,9 @@ DerivedData
 .bundle
 
 # Examples
-Example/**/Podfile.lock
-Example/Pods
-Example/**/Pods
+# Example/**/Podfile.lock
+# Example/Pods
+# Example/**/Pods
 
 Carthage
 # We recommend against adding the Pods directory to your .gitignore. However
