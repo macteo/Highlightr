@@ -69,16 +69,17 @@ class SampleCode: UIViewController
     
     @IBAction func pickLanguage(_ sender: AnyObject)
     {
-        let languages = highlightr.supportedLanguages()
+        var languages = highlightr.supportedLanguages()
+        languages = languages.sorted()
         let indexOrNil = languages.index(of: languageName.text!.lowercased())
         let index = (indexOrNil == nil) ? 0 : indexOrNil!
         
         ActionSheetStringPicker.show(withTitle: "Pick a Language",
-                                     rows: languages,
+                                     rows: languages.map { $0.capitalized },
                                      initialSelection: index,
                                      doneBlock:
             { picker, index, value in
-                let language = value! as! String
+                let language = (value! as! String).lowercased()
                 self.textStorage.language = language
                 self.languageName.text = language.capitalized
                 let snippetPath = Bundle.main.path(forResource: "default", ofType: "txt", inDirectory: "Samples/\(language)", forLocalization: nil)
@@ -97,11 +98,11 @@ class SampleCode: UIViewController
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
 
-        DispatchQueue.global(qos: .userInteractive).async {
+        DispatchQueue.main.async {
             let start = Date()
             for _ in 0...100
             {
-                self.highlightr.highlight(code, as: self.languageName.text!)
+                let _ = self.highlightr.highlight(code, as: self.languageName.text!)
             }
             let end = Date()
             let time = Float(end.timeIntervalSince(start));
@@ -130,11 +131,11 @@ class SampleCode: UIViewController
         let index = (indexOrNil == nil) ? 0 : indexOrNil!
         
         ActionSheetStringPicker.show(withTitle: "Pick a Theme",
-                                     rows: themes,
+                                     rows: themes.map { $0.capitalized },
                                      initialSelection: index,
                                      doneBlock:
             { picker, index, value in
-                let theme = value! as! String
+                let theme = (value! as! String).lowercased()
                 self.textStorage.highlightr.setTheme(to: theme)
                 self.themeName.text = theme.capitalized
                 self.updateColors()
