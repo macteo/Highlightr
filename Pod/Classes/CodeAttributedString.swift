@@ -55,12 +55,12 @@ open class CodeAttributedString : NSTextStorage
         setupListeners()
     }
 
-	/// Initialize the CodeAttributedString
-	required public init(itemProviderData data: Data, typeIdentifier: String) throws
-	{
-		try super.init(itemProviderData: data, typeIdentifier: typeIdentifier)
-		setupListeners()
-	}
+//    /// Initialize the CodeAttributedString
+//    required public init(itemProviderData data: Data, typeIdentifier: String) throws
+//    {
+//        try super.init(itemProviderData: data, typeIdentifier: typeIdentifier)
+//        setupListeners()
+//    }
 
 	/// Initialize the CodeAttributedString
 	public override init(attributedString attrStr: NSAttributedString)
@@ -74,8 +74,12 @@ open class CodeAttributedString : NSTextStorage
     /// Initialize the CodeAttributedString
     required public init?(pasteboardPropertyList propertyList: Any, ofType type: String)
     {
-        super.init(pasteboardPropertyList: propertyList, ofType: type)
+    super.init(pasteboardPropertyList: propertyList, ofType: NSPasteboard.PasteboardType(rawValue: type))
         setupListeners()
+    }
+    
+    required public init?(pasteboardPropertyList propertyList: Any, ofType type: NSPasteboard.PasteboardType) {
+    fatalError("init(pasteboardPropertyList:ofType:) has not been implemented")
     }
     #endif
     
